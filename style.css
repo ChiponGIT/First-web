@@ -70,9 +70,10 @@ body{
 .pill.off{ border-color: rgba(255,77,109,.35); color: #ff9bb0; }
 
 .shell{
-  max-width: 1050px;
+  max-width: 1200px;
   margin: 18px auto 40px;
   padding: 0 18px;
+};
 }
 
 .tabs{
@@ -91,6 +92,45 @@ body{
   font-family: var(--font);
   font-size: 13px;
   transition: transform .06s ease, border-color .15s ease, background .15s ease;
+/* Make the main panel fill the space like a real dashboard */
+.panel{
+  min-height: calc(100vh - 140px);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tabs become a top nav bar */
+.tabs{
+  display:flex;
+  gap:10px;
+  margin: 0 0 14px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255,255,255,.03);
+}
+
+/* Tabs look like dashboard buttons */
+.tab{
+  flex: 0 0 auto;
+  padding: 10px 14px;
+}
+
+/* Make views use full width */
+.view.active{
+  display:block;
+  width: 100%;
+}
+
+/* Make the main content area wider + more “panel” */
+.card{
+  width: 100%;
+}
+
+/* Better spacing so it doesn’t look tiny */
+.row{
+  margin-bottom: 10px;
+}
 }
 .tab:hover{ transform: translateY(-1px); border-color: rgba(215,226,239,.22); }
 .tab.active{
@@ -324,4 +364,20 @@ body[data-density="compact"]{
   background: rgba(255,255,255,.06);
   border-color: rgba(215,226,239,.22);
 }
-body[data-density="compact"] .item{ padding: 10px; }
+body[data-density="compact"] .item{ padding: 10px; }.dashboardGrid{
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+@media (max-width: 900px){
+  .dashboardGrid{
+    grid-template-columns: 1fr;
+  }
+}
+
+.sideCard{
+  position: sticky;
+  top: 86px;
+}
