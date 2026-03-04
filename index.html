@@ -29,7 +29,46 @@
   <button class="tab" data-tab="youtube">YouTube</button>
   <button class="tab" data-tab="links">Links</button>
   <button class="tab" data-tab="settings">Settings</button>
-</nav>
+</nav><!-- LINKS -->
+<div class="view" id="tab-links">
+  <div class="row">
+    <div>
+      <h2>Public Links Hub</h2>
+      <p class="muted">Type a name and instantly open their public pages.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="cardHead">
+      <h3>Search</h3>
+      <div class="addForm">
+        <input id="linksSearch" class="input" placeholder="type a name (e.g. Kai Cenat)" />
+        <button class="btn" id="linksClear" type="button">Clear</button>
+      </div>
+    </div>
+
+    <div id="linksResults" class="list"></div>
+  </div>
+
+  <div class="card">
+    <div class="cardHead">
+      <h3>Add / Edit Person</h3>
+      <form id="personForm" class="personForm" autocomplete="off">
+        <input id="pName" class="input" placeholder="Display name (e.g. Kai Cenat)" />
+        <input id="pTwitch" class="input" placeholder="Twitch username (e.g. kai_cenat)" />
+        <input id="pYouTube" class="input" placeholder="YouTube handle or channel URL (optional)" />
+        <input id="pX" class="input" placeholder="X handle (optional, no @ needed)" />
+        <input id="pIG" class="input" placeholder="Instagram handle (optional)" />
+        <input id="pTikTok" class="input" placeholder="TikTok handle (optional)" />
+        <button class="btn" type="submit">Save</button>
+      </form>
+    </div>
+
+    <div class="hint small">
+      Tip: You can store as many people as you want. It saves only in your browser.
+    </div>
+  </div>
+</div>
 
     <section class="panel">
       <!-- TWITCH -->
