@@ -289,4 +289,141 @@ $("#ytAuto").addEventListener("change", (e) => {
     clearInterval(ytTimer);
     ytTimer = null;
   }
-});
+});// -------------------------
+// Links Hub (public links)
+// -------------------------
+const PEOPLE_KEY = "dash_people_v1";
+
+let people = store.get(PEOPLE_KEY, [
+  // Example starter entry (you can delete later)
+  {
+    name: "Kai Cenat",
+    twitch: "kai_cenat",
+    youtube: "",
+    x: "KaiCenat",
+    ig: "kaicenat",
+    tiktok: "kaicenat"
+  }
+]);
+
+function normalizeHandle(s){
+  return (s || "").trim().replace(/^@/, "");
+}
+
+function buildLinks(p){
+  const links = [];
+  if (p.twitch) links.push({ label: "Twitch", url: `https://www.twitch.tv/${encodeURIComponent(p.twitch)}` });
+  if (p.youtube) {
+    const y = p.youtube.trim();
+    // allow handle, channel URL, or full URL
+    const url = y.startsWith("http") ? y
+      : y.startsWith("UC") ? `https://www.youtube.com/channel/${encodeURIComponent(y)}`
+      : `https://www.youtube.com/@${encodeURIComponent(normalizeHandle(y))}`;
+    links.push({ label: "YouTube", url });
+  }
+  if (p.x) links.push({ label: "X", url: `https://x.com/${encodeURIComponent(p.x)}` });
+  if (p.ig) links.push({ label: "Instagram", url: `https://www.instagram.com/${encodeURIComponent(p.ig)}/` });
+  if (p.tiktok) links.push({ label: "TikTok", url: `https://www.tiktok.com/@${encodeURIComponent(normalizeHandle(p.tiktok))}` });
+  return links;
+}
+
+function renderLinksResults(query=""){
+  const q = query.trim().toLowerCase();
+  const list = $("#linksResults");
+  list.innerHTML = "";
+
+  const matches = !q
+    ? people
+    : people.filter(p => p.name.toLowerCase().includes(q) || (p.twitch||"").toLowerCase().includes(q));
+
+  if (!matches.length){
+    list.innerHTML = `<div class="item"><div class="left">
+      <div class="name">No matches</div>
+      <div class="meta">Try a different name, or add them below.</div>
+    </div></div>`;
+    return;
+  }
+
+  matches.forEach(p => {
+    const el = document.createElement("div");
+    el.className = "item";
+
+    const links = buildLinks(p);
+    const chips = links.map(l => `
+      <a class="linkChip" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>
+    `).join("");
+
+    el.innerHTML = `
+      <div class="left">
+        <div class="name">${escapeHtml(p.name)}</div>
+        <div class="meta">${escapeHtml(p.twitch ? `twitch: ${p.twitch}` : "—")}</div>
+        <div class="linksGrid">${chips || `<span class="muted small">No links saved yet</span>`}</div>
+      </div>
+      <div class="actions">
+        <button class="iconBtn" data-edit="${escapeHtml(p.name)}">Edit</button>
+        <button class="iconBtn danger" data-del="${escapeHtml(p.name)}">Delete</button>
+      </div>
+    `;
+
+    el.querySelector("[data-del]").addEventListener("click", () => {
+      people = people.filter(x => x.name !== p.name);
+      store.set(PEOPLE_KEY, people);
+      renderLinksResults($("#linksSearch").value);
+    });
+
+    el.querySelector("[data-edit]").addEventListener("click", () => {
+      $("#pName").value = p.name;
+      $("#pTwitch").value = p.twitch || "";
+      $("#pYouTube").value = p.youtube || "";
+      $("#pX").value = p.x || "";
+      $("#pIG").value = p.ig || "";
+      $("#pTikTok").value = p.tiktok || "";
+      $("#pName").focus();
+    });
+
+    list.appendChild(el);
+  });
+}
+
+if ($("#linksSearch")) {
+  $("#linksSearch").addEventListener("input", (e) => renderLinksResults(e.target.value));
+  $("#linksClear").addEventListener("click", () => {
+    $("#linksSearch").value = "";
+    renderLinksResults("");
+  });
+
+  $("#personForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const name = $("#pName").value.trim();
+    if (!name) return;
+
+    const updated = {
+      name,
+      twitch: normalizeHandle($("#pTwitch").value),
+      youtube: $("#pYouTube").value.trim(),
+      x: normalizeHandle($("#pX").value),
+      ig: normalizeHandle($("#pIG").value),
+      tiktok: normalizeHandle($("#pTikTok").value),
+    };
+
+    // upsert by exact name
+    const idx = people.findIndex(p => p.name.toLowerCase() === name.toLowerCase());
+    if (idx >= 0) people[idx] = updated;
+    else people.unshift(updated);
+
+    store.set(PEOPLE_KEY, people);
+
+    // clear inputs except search
+    $("#pName").value = "";
+    $("#pTwitch").value = "";
+    $("#pYouTube").value = "";
+    $("#pX").value = "";
+    $("#pIG").value = "";
+    $("#pTikTok").value = "";
+
+    renderLinksResults($("#linksSearch").value);
+  });
+
+  renderLinksResults("");
+}
