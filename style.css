@@ -291,5 +291,37 @@ body[data-theme="glass"]{
 /* density */
 body[data-density="compact"]{
   --pad: 14px;
+}.personForm{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+@media (max-width: 860px){
+  .personForm{ grid-template-columns: 1fr; }
+}
+
+.linksGrid{
+  display:flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.linkChip{
+  display:inline-flex;
+  gap: 8px;
+  align-items:center;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.03);
+  color: var(--text);
+  text-decoration:none;
+  font-size: 12px;
+}
+.linkChip:hover{
+  background: rgba(255,255,255,.06);
+  border-color: rgba(215,226,239,.22);
 }
 body[data-density="compact"] .item{ padding: 10px; }
