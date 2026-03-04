@@ -1,1 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Private Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg"></div>
 
+  <header class="topbar">
+    <div class="brand">
+      <span class="dot"></span>
+      <span class="title">PRIVATE TERMINAL DASH</span>
+      <span class="sub">only me • live checkers</span>
+    </div>
+
+    <div class="status">
+      <span id="clock">--:--:--</span>
+      <span class="pill" id="netPill">online</span>
+    </div>
+  </header>
+
+  <main class="shell">
+    <nav class="tabs">
+      <button class="tab active" data-tab="twitch">Twitch</button>
+      <button class="tab" data-tab="youtube">YouTube</button>
+      <button class="tab" data-tab="settings">Settings</button>
+    </nav>
+
+    <section class="panel">
+      <!-- TWITCH -->
+      <div class="view active" id="tab-twitch">
+        <div class="row">
+          <div>
+            <h2>Twitch Live Checker</h2>
+            <p class="muted">Add streamers. Hit check. Optional auto refresh.</p>
+          </div>
+
+          <div class="controls">
+            <label class="toggle">
+              <input type="checkbox" id="twitchAuto" />
+              <span>Auto refresh (60s)</span>
+            </label>
+            <button class="btn" id="twitchCheck">Check now</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="cardHead">
+            <h3>Streamers</h3>
+            <form id="twitchAddForm" class="addForm" autocomplete="off">
+              <input id="twitchName" class="input" placeholder="add streamer (e.g. kai_cooks)" />
+              <button class="btn" type="submit">Add</button>
+            </form>
+          </div>
+
+          <div id="twitchList" class="list"></div>
+
+          <div class="hint">
+            <span class="pill warn">note</span>
+            Twitch checking needs an API/proxy to be accurate. UI is ready — we’ll wire it in next.
+          </div>
+        </div>
+      </div>
+
+      <!-- YOUTUBE -->
+      <div class="view" id="tab-youtube">
+        <div class="row">
+          <div>
+            <h2>YouTube Live Checker</h2>
+            <p class="muted">Uses YouTube RSS feeds (free). Add channel IDs and check.</p>
+          </div>
+
+          <div class="controls">
+            <label class="toggle">
+              <input type="checkbox" id="ytAuto" />
+              <span>Auto refresh (60s)</span>
+            </label>
+            <button class="btn" id="ytCheck">Check now</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="cardHead">
+            <h3>Channels</h3>
+            <form id="ytAddForm" class="addForm" autocomplete="off">
+              <input id="ytId" class="input" placeholder="add channel ID (e.g. UCxxxx...)" />
+              <button class="btn" type="submit">Add</button>
+            </form>
+          </div>
+
+          <div class="hint small">
+            Need a channel ID? Go to the channel → About → Share channel → Copy link (often contains the ID),
+            or use a site that converts @handle to channel ID. (We can add a handle converter later.)
+          </div>
+
+          <div id="ytList" class="list"></div>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="view" id="tab-settings">
+        <h2>Settings</h2>
+        <p class="muted">Customize your dashboard vibe.</p>
+
+        <div class="grid2">
+          <div class="card">
+            <h3>Theme</h3>
+            <div class="field">
+              <label>Mode</label>
+              <select id="themeMode" class="select">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+                <option value="glass">Glass</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Accent</label>
+              <input type="color" id="accent" class="color" />
+            </div>
+
+            <div class="field">
+              <label>Density</label>
+              <select id="density" class="select">
+                <option value="cozy">Cozy</option>
+                <option value="compact">Compact</option>
+              </select>
+            </div>
+
+            <button class="btn ghost" id="reset">Reset</button>
+          </div>
+
+          <div class="card">
+            <h3>About</h3>
+            <p class="muted">
+              Private dashboard hosted on GitHub Pages.<br />
+              Saved locally in your browser.
+            </p>
+            <div class="divider"></div>
+            <p class="small muted">
+              Next upgrades: real Twitch API (safe proxy), notifications, favorites, and “LIVE” sound/push.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span class="muted">v1 • terminal dash</span>
+      <span class="muted" id="lastChecked">last checked: —</span>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
