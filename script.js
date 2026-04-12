@@ -377,7 +377,12 @@ lrcFileInput.addEventListener("change", (e) => {
 function parseLyrics(text) {
   lyrics = [];
   const lines = text.split(/\r?\n/);
-  const timeRegex = /
+ const timeRegex = /
+
+\[(\d{2}):(\d{2})(?:\.(\d{2}))?\]
+
+/;
+
 
 \[(\d{2}):(\d{2})(?:\.(\d{2}))?\]
 
