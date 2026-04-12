@@ -1,1 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AudioFlow</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-ambient"></div>
+  <div class="particles"></div>
+
+  <div class="app-shell">
+    <header class="app-header glass">
+      <div class="logo">
+        <span class="logo-dot"></span>
+        <span>AudioFlow</span>
+      </div>
+      <div class="header-right">
+        <span class="tag">Futuristic Neon Player</span>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <!-- LEFT: PLAYER + CONTROLS -->
+      <section class="panel-left glass">
+        <div class="upload-area" id="uploadArea">
+          <input type="file" id="audioFileInput" accept="audio/*" hidden />
+          <button id="browseBtn" class="btn primary">Upload Audio</button>
+          <p class="upload-hint">or drag &amp; drop your track here</p>
+          <p id="fileName" class="file-name">No track loaded</p>
+        </div>
+
+        <div class="waveform-container">
+          <canvas id="visualizer"></canvas>
+        </div>
+
+        <div class="player-controls">
+          <div class="time-row">
+            <span id="currentTime">0:00</span>
+            <input type="range" id="seekBar" min="0" max="100" value="0" />
+            <span id="duration">0:00</span>
+          </div>
+
+          <div class="transport-row">
+            <button id="playPauseBtn" class="btn circle">
+              ▶
+            </button>
+            <button id="loopToggle" class="btn pill">
+              Loop: Off
+            </button>
+            <div class="volume-group">
+              <span class="label">Vol</span>
+              <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.8" />
+            </div>
+          </div>
+        </div>
+
+        <div class="sound-controls">
+          <h3>Sound Controls</h3>
+          <div class="slider-row">
+            <label for="bassSlider">Bass</label>
+            <input type="range" id="bassSlider" min="-12" max="12" value="0" />
+          </div>
+          <div class="slider-row">
+            <label for="trebleSlider">Treble</label>
+            <input type="range" id="trebleSlider" min="-12" max="12" value="0" />
+          </div>
+          <div class="slider-row">
+            <label for="beatSlider">Beat Intensity</label>
+            <input type="range" id="beatSlider" min="0" max="2" step="0.1" value="1" />
+          </div>
+          <div class="toggle-row">
+            <button id="reverbToggle" class="btn pill small">Reverb: Off</button>
+            <button id="spatialToggle" class="btn pill small">3D: Off</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT: LYRICS + INPUT -->
+      <section class="panel-right glass">
+        <div class="lyrics-header">
+          <h2>Lyrics</h2>
+          <div class="lyrics-actions">
+            <button id="loadLrcBtn" class="btn secondary small">Load .lrc</button>
+            <input type="file" id="lrcFileInput" accept=".lrc,.txt" hidden />
+          </div>
+        </div>
+
+        <textarea id="lyricsInput" class="lyrics-input" placeholder="[00:10.00] Type or paste LRC-style lyrics here
+[00:20.00] Each line with a timestamp
+[00:30.00] Active line will glow as it plays"></textarea>
+
+        <div class="lyrics-display" id="lyricsDisplay"></div>
+      </section>
+    </main>
+
+    <footer class="app-footer glass">
+      <span>AudioFlow • Browser-based Neon Music Lab</span>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
 
